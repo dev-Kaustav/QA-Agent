@@ -1,0 +1,12 @@
+server:
+  port: 8084
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/sec
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+elasticsearch:
+  host: http://elasticsearch:9200
