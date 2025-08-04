@@ -1,0 +1,16 @@
+package com.example.sec.ingestion.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import io.minio.MinioClient;
+
+@Configuration
+public class S3Config {
+  @Bean
+  public MinioClient minioClient() {
+    return MinioClient.builder()
+        .endpoint("http://minio:9000")
+        .credentials("minioadmin", "minioadmin")
+        .build();
+  }
+}

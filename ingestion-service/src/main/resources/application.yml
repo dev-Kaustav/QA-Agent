@@ -1,0 +1,9 @@
+server:
+  port: 8081
+sec:
+  api: https://data.sec.gov/api/
+minio:
+  bucket: filings
+  url: http://minio:9000
+  access-key: minioadmin
+  secret-key: minioadmin
