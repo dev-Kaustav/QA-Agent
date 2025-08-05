@@ -1,6 +1,6 @@
 package com.example.sec.embedding.config;
 
-import org.apache.opennlp.tools.tokenize.SimpleTokenizer;
+import opennlp.tools.tokenize.SimpleTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

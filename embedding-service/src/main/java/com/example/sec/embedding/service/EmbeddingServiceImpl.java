@@ -4,7 +4,7 @@ import java.util.Arrays;
 import org.springframework.stereotype.Service;
 import com.example.sec.embedding.model.EmbeddingRecord;
 import com.example.sec.embedding.repository.EmbeddingRepository;
-import org.apache.opennlp.tools.tokenize.SimpleTokenizer;
+import opennlp.tools.tokenize.SimpleTokenizer;
 
 @Service
 public class EmbeddingServiceImpl implements EmbeddingService {
