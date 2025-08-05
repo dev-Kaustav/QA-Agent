@@ -3,7 +3,7 @@ package com.example.sec.qa.service;
 import org.springframework.stereotype.Service;
 import com.example.sec.qa.model.QaRequest;
 import com.example.sec.qa.model.QaResponse;
-import org.apache.opennlp.tools.tokenize.SimpleTokenizer;
+import opennlp.tools.tokenize.SimpleTokenizer;
 
 @Service
 public class QaServiceImpl implements QaService {
