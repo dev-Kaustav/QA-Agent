@@ -31,7 +31,6 @@ public class QaController {
         if (docs == null) {
             docs = Collections.emptyList();
         }
-        String answer = reasoningService.generateAnswer(question, docs);
-        return new Answer(answer, docs);
+        return reasoningService.generateAnswer(question, docs);
     }
 }
