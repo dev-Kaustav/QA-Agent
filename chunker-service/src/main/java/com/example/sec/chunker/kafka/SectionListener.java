@@ -28,15 +28,20 @@ public class SectionListener {
     }
 
     @KafkaListener(topics = "${kafka.topic}")
-    public void handle(String content) {
-        Section section = new Section();
-        section.setContent(content);
-        section = chunkerService.save(section);
-        restTemplate.postForObject(
-                retrievalBaseUrl + "/sections", Map.of("content", section.getContent()), Void.class);
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("sectionId", section.getId().toString());
-        map.add("content", section.getContent());
-        restTemplate.postForObject(embeddingBaseUrl + "/embeddings", map, Void.class);
+    public void handle(String text) {
+        String[] chunks = text.split("(?<=\\.)\\s+");
+        for (String chunk : chunks) {
+            String trimmed = chunk.trim();
+            if (trimmed.isEmpty()) {
+                continue;
+            }
+            Section section = new Section();
+            section.setContent(trimmed);
+            section = chunkerService.save(section);
+            MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+            map.add("sectionId", section.getId().toString());
+            map.add("content", section.getContent());
+            restTemplate.postForObject(embeddingBaseUrl + "/embeddings", map, Void.class);
+        }
     }
 }
