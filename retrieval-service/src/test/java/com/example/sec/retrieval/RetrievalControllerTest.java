@@ -1,7 +1,7 @@
 package com.example.sec.retrieval;
 
-import com.example.sec.retrieval.model.Document;
-import com.example.sec.retrieval.repository.DocumentRepository;
+import com.example.sec.retrieval.model.Section;
+import com.example.sec.retrieval.repository.SectionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +21,21 @@ class RetrievalControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private DocumentRepository repository;
+    private SectionRepository repository;
 
     @BeforeEach
     void setup() {
         repository.deleteAll();
-        repository.save(new Document(null, "Revenue was $5 million in 2023."));
-        repository.save(new Document(null, "Operating expenses decreased."));
+        Section s1 = new Section();
+        s1.setContent("Revenue was $5 million in 2023.");
+        repository.save(s1);
+        Section s2 = new Section();
+        s2.setContent("Operating expenses decreased.");
+        repository.save(s2);
     }
 
     @Test
-    void searchReturnsMatchingDocuments() throws Exception {
+    void searchReturnsMatchingSections() throws Exception {
         mockMvc.perform(get("/search").param("query", "revenue"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0]").value("Revenue was $5 million in 2023."));

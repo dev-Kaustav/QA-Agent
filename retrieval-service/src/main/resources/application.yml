@@ -9,3 +9,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+elasticsearch:
+  host: http://localhost:9200
