@@ -8,3 +8,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
+embedding:
+  base-url: http://embedding-service:8084
+retrieval:
+  base-url: http://retrieval-service:8085

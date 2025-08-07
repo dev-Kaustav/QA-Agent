@@ -1,8 +1,7 @@
 package com.example.sec.retrieval.controller;
 
-import com.example.sec.retrieval.model.Document;
 import com.example.sec.retrieval.model.Section;
-import com.example.sec.retrieval.repository.DocumentRepository;
+import com.example.sec.retrieval.repository.SectionRepository;
 import com.example.sec.retrieval.service.RetrievalService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RetrievalController {
 
-    private final DocumentRepository repository;
+    private final SectionRepository repository;
     private final RetrievalService retrievalService;
 
-    public RetrievalController(DocumentRepository repository, RetrievalService retrievalService) {
+    public RetrievalController(SectionRepository repository, RetrievalService retrievalService) {
         this.repository = repository;
         this.retrievalService = retrievalService;
     }
@@ -30,8 +29,8 @@ public class RetrievalController {
             .collect(Collectors.toList());
     }
 
-    @PostMapping("/documents")
-    public Document save(@RequestBody Document document) {
-        return repository.save(document);
+    @PostMapping("/sections")
+    public Section save(@RequestBody Section section) {
+        return repository.save(section);
     }
 }

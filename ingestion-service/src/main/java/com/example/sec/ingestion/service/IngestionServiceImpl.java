@@ -54,7 +54,7 @@ public class IngestionServiceImpl implements IngestionService {
           continue;
         }
         restTemplate.postForObject(
-            retrievalBaseUrl + "/documents", Map.of("content", trimmed), String.class);
+            retrievalBaseUrl + "/sections", Map.of("content", trimmed), String.class);
       }
     } catch (Exception e) {
       throw new RuntimeException("Failed to ingest filing", e);

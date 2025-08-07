@@ -14,3 +14,5 @@ kafka:
   topic: filings-parsed
 embedding:
   base-url: http://embedding-service:8084
+retrieval:
+  base-url: http://retrieval-service:8085
