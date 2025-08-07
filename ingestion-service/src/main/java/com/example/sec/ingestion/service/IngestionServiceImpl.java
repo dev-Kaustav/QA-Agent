@@ -6,8 +6,8 @@ import io.minio.PutObjectArgs;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,16 +15,24 @@ import org.springframework.web.client.RestTemplate;
 public class IngestionServiceImpl implements IngestionService {
   private final MinioClient minioClient;
   private final RestTemplate restTemplate;
+  private final KafkaTemplate<String, String> kafkaTemplate;
 
   @Value("${minio.bucket}")
   private String bucket;
 
-  @Value("${retrieval.base-url:http://localhost:8085}")
-  private String retrievalBaseUrl;
+  @Value("${parser.base-url:http://localhost:8082}")
+  private String parserBaseUrl;
 
-  public IngestionServiceImpl(MinioClient minioClient, RestTemplate restTemplate) {
+  @Value("${kafka.topic}")
+  private String topic;
+
+  public IngestionServiceImpl(
+      MinioClient minioClient,
+      RestTemplate restTemplate,
+      KafkaTemplate<String, String> kafkaTemplate) {
     this.minioClient = minioClient;
     this.restTemplate = restTemplate;
+    this.kafkaTemplate = kafkaTemplate;
   }
 
   @Override
@@ -46,12 +54,13 @@ public class IngestionServiceImpl implements IngestionService {
               .contentType("text/html")
               .build());
 
-      String text = Jsoup.parse(html).text();
-      String[] chunks = text.split("(?<=\\.)\\s+");
-      for (String chunk : chunks) {
-        String trimmed = chunk.trim();
-        if (trimmed.isEmpty()) {
-          continue;
+      Map<?, ?> parsed =
+          restTemplate.postForObject(
+              parserBaseUrl + "/parse?key=" + objectName, null, Map.class);
+      if (parsed != null) {
+        Object textObj = parsed.get("text");
+        if (textObj instanceof String text && !text.isEmpty()) {
+          kafkaTemplate.send(topic, text);
         }
         restTemplate.postForObject(
             retrievalBaseUrl + "/sections", Map.of("content", trimmed), String.class);

@@ -15,5 +15,5 @@ minio:
   secret-key: minioadmin
 kafka:
   topic: filings-parsed
-retrieval:
-  base-url: http://retrieval-service:8085
+parser:
+  base-url: http://parser-service:8082
