@@ -10,3 +10,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+kafka:
+  topic: filings-parsed
+embedding:
+  base-url: http://embedding-service:8084

@@ -39,6 +39,7 @@ services:
     build: ./ingestion-service
     depends_on:
       - minio
+      - kafka
   parser-service:
     build: ./parser-service
     depends_on:
