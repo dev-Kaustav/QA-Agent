@@ -1,22 +1,26 @@
 package com.example.sec.retrieval.controller;
 
+import com.example.sec.retrieval.model.Document;
+import com.example.sec.retrieval.repository.DocumentRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.sec.retrieval.model.Section;
-import com.example.sec.retrieval.service.RetrievalService;
 
 @RestController
 public class RetrievalController {
-  private final RetrievalService retrievalService;
 
-  public RetrievalController(RetrievalService retrievalService) {
-    this.retrievalService = retrievalService;
-  }
+    private final DocumentRepository repository;
 
-  @GetMapping("/search")
-  public List<Section> search(@RequestParam String q) {
-    return retrievalService.search(q);
-  }
+    public RetrievalController(DocumentRepository repository) {
+        this.repository = repository;
+    }
+
+    @GetMapping("/search")
+    public List<String> search(@RequestParam String query) {
+        return repository.findByContentContainingIgnoreCase(query).stream()
+            .map(Document::getContent)
+            .collect(Collectors.toList());
+    }
 }

@@ -1,12 +1,9 @@
-server:
-  port: 8085
 spring:
   datasource:
-    url: jdbc:postgresql://postgres:5432/sec
-    username: postgres
-    password: postgres
+    url: jdbc:h2:mem:retrieval;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
   jpa:
     hibernate:
       ddl-auto: update
-elasticsearch:
-  host: http://elasticsearch:9200
