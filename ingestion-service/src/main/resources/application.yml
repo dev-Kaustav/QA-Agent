@@ -1,5 +1,11 @@
 server:
   port: 8081
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 sec:
   api: https://data.sec.gov/api/
 minio:
@@ -7,5 +13,7 @@ minio:
   url: http://minio:9000
   access-key: minioadmin
   secret-key: minioadmin
+kafka:
+  topic: filings-parsed
 retrieval:
   base-url: http://retrieval-service:8085
