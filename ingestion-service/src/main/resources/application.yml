@@ -7,3 +7,5 @@ minio:
   url: http://minio:9000
   access-key: minioadmin
   secret-key: minioadmin
+retrieval:
+  base-url: http://retrieval-service:8085

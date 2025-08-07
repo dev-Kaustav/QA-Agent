@@ -16,7 +16,7 @@ public class QaController {
     private final RestTemplate restTemplate;
     private final ReasoningService reasoningService;
 
-    @Value("${retrieval.base-url:http://localhost:8081}")
+    @Value("${retrieval.base-url:http://localhost:8085}")
     private String retrievalBaseUrl;
 
     public QaController(RestTemplate restTemplate, ReasoningService reasoningService) {
