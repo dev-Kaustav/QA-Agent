@@ -1,0 +1,6 @@
+/Users/kaustav/dev/QA-Agent/ingestion-service/src/main/java/com/example/sec/ingestion/IngestionServiceApplication.java
+/Users/kaustav/dev/QA-Agent/ingestion-service/src/main/java/com/example/sec/ingestion/config/S3Config.java
+/Users/kaustav/dev/QA-Agent/ingestion-service/src/main/java/com/example/sec/ingestion/controller/IngestionController.java
+/Users/kaustav/dev/QA-Agent/ingestion-service/src/main/java/com/example/sec/ingestion/model/Filing.java
+/Users/kaustav/dev/QA-Agent/ingestion-service/src/main/java/com/example/sec/ingestion/service/IngestionService.java
+/Users/kaustav/dev/QA-Agent/ingestion-service/src/main/java/com/example/sec/ingestion/service/IngestionServiceImpl.java

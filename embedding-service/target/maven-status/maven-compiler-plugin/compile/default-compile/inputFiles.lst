@@ -1,0 +1,8 @@
+/Users/kaustav/dev/QA-Agent/embedding-service/src/main/java/com/example/sec/embedding/EmbeddingServiceApplication.java
+/Users/kaustav/dev/QA-Agent/embedding-service/src/main/java/com/example/sec/embedding/config/ElasticsearchConfig.java
+/Users/kaustav/dev/QA-Agent/embedding-service/src/main/java/com/example/sec/embedding/config/EmbeddingModelConfig.java
+/Users/kaustav/dev/QA-Agent/embedding-service/src/main/java/com/example/sec/embedding/controller/EmbeddingController.java
+/Users/kaustav/dev/QA-Agent/embedding-service/src/main/java/com/example/sec/embedding/model/EmbeddingRecord.java
+/Users/kaustav/dev/QA-Agent/embedding-service/src/main/java/com/example/sec/embedding/repository/EmbeddingRepository.java
+/Users/kaustav/dev/QA-Agent/embedding-service/src/main/java/com/example/sec/embedding/service/EmbeddingService.java
+/Users/kaustav/dev/QA-Agent/embedding-service/src/main/java/com/example/sec/embedding/service/EmbeddingServiceImpl.java

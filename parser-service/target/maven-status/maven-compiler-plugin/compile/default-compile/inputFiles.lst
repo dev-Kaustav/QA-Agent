@@ -1,0 +1,6 @@
+/Users/kaustav/dev/QA-Agent/parser-service/src/main/java/com/example/sec/parser/ParserServiceApplication.java
+/Users/kaustav/dev/QA-Agent/parser-service/src/main/java/com/example/sec/parser/config/S3Config.java
+/Users/kaustav/dev/QA-Agent/parser-service/src/main/java/com/example/sec/parser/controller/ParserController.java
+/Users/kaustav/dev/QA-Agent/parser-service/src/main/java/com/example/sec/parser/model/ParsedDocument.java
+/Users/kaustav/dev/QA-Agent/parser-service/src/main/java/com/example/sec/parser/service/ParserService.java
+/Users/kaustav/dev/QA-Agent/parser-service/src/main/java/com/example/sec/parser/service/ParserServiceImpl.java

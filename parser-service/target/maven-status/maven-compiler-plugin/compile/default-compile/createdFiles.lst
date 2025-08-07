@@ -1,0 +1,6 @@
+com/example/sec/parser/service/ParserService.class
+com/example/sec/parser/ParserServiceApplication.class
+com/example/sec/parser/service/ParserServiceImpl.class
+com/example/sec/parser/controller/ParserController.class
+com/example/sec/parser/config/S3Config.class
+com/example/sec/parser/model/ParsedDocument.class

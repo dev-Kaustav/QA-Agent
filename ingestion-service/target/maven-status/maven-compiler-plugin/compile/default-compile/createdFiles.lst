@@ -1,0 +1,6 @@
+com/example/sec/ingestion/controller/IngestionController.class
+com/example/sec/ingestion/IngestionServiceApplication.class
+com/example/sec/ingestion/model/Filing.class
+com/example/sec/ingestion/config/S3Config.class
+com/example/sec/ingestion/service/IngestionServiceImpl.class
+com/example/sec/ingestion/service/IngestionService.class
