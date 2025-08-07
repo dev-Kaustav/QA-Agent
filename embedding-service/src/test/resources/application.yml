@@ -5,3 +5,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+elasticsearch:
+  host: http://localhost:9200
