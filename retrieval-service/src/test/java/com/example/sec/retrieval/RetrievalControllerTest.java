@@ -2,14 +2,19 @@ package com.example.sec.retrieval;
 
 import com.example.sec.retrieval.model.Section;
 import com.example.sec.retrieval.repository.SectionRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,6 +27,9 @@ class RetrievalControllerTest {
 
     @Autowired
     private SectionRepository repository;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setup() {
@@ -39,5 +47,27 @@ class RetrievalControllerTest {
         mockMvc.perform(get("/search").param("query", "revenue"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[0]").value("Revenue was $5 million in 2023."));
+    }
+
+    @Test
+    void saveSectionPersistsMetadata() throws Exception {
+        Section section = new Section();
+        section.setCik("1234");
+        section.setType("10-K");
+        section.setContent("Test content");
+
+        mockMvc.perform(
+                post("/sections")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(section)))
+            .andExpect(status().isOk());
+
+        Optional<Section> saved = repository.findAll().stream()
+            .filter(s -> "Test content".equals(s.getContent()))
+            .findFirst();
+
+        assertThat(saved).isPresent();
+        assertThat(saved.get().getCik()).isEqualTo("1234");
+        assertThat(saved.get().getType()).isEqualTo("10-K");
     }
 }

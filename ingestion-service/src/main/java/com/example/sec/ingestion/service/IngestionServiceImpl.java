@@ -1,10 +1,12 @@
 package com.example.sec.ingestion.service;
 
 import com.example.sec.ingestion.model.Filing;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,6 +18,7 @@ public class IngestionServiceImpl implements IngestionService {
   private final MinioClient minioClient;
   private final RestTemplate restTemplate;
   private final KafkaTemplate<String, String> kafkaTemplate;
+  private final ObjectMapper objectMapper;
 
   @Value("${minio.bucket}")
   private String bucket;
@@ -29,10 +32,12 @@ public class IngestionServiceImpl implements IngestionService {
   public IngestionServiceImpl(
       MinioClient minioClient,
       RestTemplate restTemplate,
-      KafkaTemplate<String, String> kafkaTemplate) {
+      KafkaTemplate<String, String> kafkaTemplate,
+      ObjectMapper objectMapper) {
     this.minioClient = minioClient;
     this.restTemplate = restTemplate;
     this.kafkaTemplate = kafkaTemplate;
+    this.objectMapper = objectMapper;
   }
 
   @Override
@@ -60,7 +65,13 @@ public class IngestionServiceImpl implements IngestionService {
       if (parsed != null) {
         Object textObj = parsed.get("text");
         if (textObj instanceof String text && !text.isEmpty()) {
-          kafkaTemplate.send(topic, text);
+          Map<String, Object> message = new HashMap<>();
+          message.put("cik", filing.getCik());
+          message.put("formType", filing.getFormType());
+          message.put("filingDate", filing.getFilingDate());
+          message.put("text", text);
+          String payload = objectMapper.writeValueAsString(message);
+          kafkaTemplate.send(topic, payload);
         }
       }
     } catch (Exception e) {
