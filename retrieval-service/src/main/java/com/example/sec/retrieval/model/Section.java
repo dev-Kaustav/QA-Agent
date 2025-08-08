@@ -11,6 +11,7 @@ public class Section {
   private Long id;
   private String cik;
   private String type;
+  private String filingDate;
   private String content;
   private String filingDate;
 
@@ -20,6 +21,8 @@ public class Section {
   public void setCik(String cik) { this.cik = cik; }
   public String getType() { return type; }
   public void setType(String type) { this.type = type; }
+  public String getFilingDate() { return filingDate; }
+  public void setFilingDate(String filingDate) { this.filingDate = filingDate; }
   public String getContent() { return content; }
   public void setContent(String content) { this.content = content; }
   public String getFilingDate() { return filingDate; }

@@ -36,7 +36,9 @@ class RetrievalControllerTest {
         repository.deleteAll();
         Section s1 = new Section();
         s1.setContent("Revenue was $5 million in 2023.");
-        s1.setFilingDate("2023-01-01");
+        s1.setCik("1234");
+        s1.setType("10-K");
+        s1.setFilingDate("2023-02-03");
         repository.save(s1);
         Section s2 = new Section();
         s2.setContent("Operating expenses decreased.");
@@ -48,7 +50,21 @@ class RetrievalControllerTest {
     void searchReturnsMatchingSections() throws Exception {
         mockMvc.perform(get("/search").param("query", "revenue"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$[0]").value("Revenue was $5 million in 2023."));
+            .andExpect(jsonPath("$[0].content").value("Revenue was $5 million in 2023."));
+    }
+
+    @Test
+    void searchSupportsMetadataFilters() throws Exception {
+        mockMvc.perform(
+                get("/search")
+                    .param("query", "revenue")
+                    .param("cik", "1234")
+                    .param("formType", "10-K")
+                    .param("filingDate", "2023-02-03"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].cik").value("1234"))
+            .andExpect(jsonPath("$[0].type").value("10-K"))
+            .andExpect(jsonPath("$[0].filingDate").value("2023-02-03"));
     }
 
     @Test
@@ -56,6 +72,7 @@ class RetrievalControllerTest {
         Section section = new Section();
         section.setCik("1234");
         section.setType("10-K");
+        section.setFilingDate("2023-01-01");
         section.setContent("Test content");
         section.setFilingDate("2023-01-03");
 
@@ -72,6 +89,6 @@ class RetrievalControllerTest {
         assertThat(saved).isPresent();
         assertThat(saved.get().getCik()).isEqualTo("1234");
         assertThat(saved.get().getType()).isEqualTo("10-K");
-        assertThat(saved.get().getFilingDate()).isEqualTo("2023-01-03");
+        assertThat(saved.get().getFilingDate()).isEqualTo("2023-01-01");
     }
 }
