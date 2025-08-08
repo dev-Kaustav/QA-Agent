@@ -62,8 +62,6 @@ public class IngestionServiceImpl implements IngestionService {
         if (textObj instanceof String text && !text.isEmpty()) {
           kafkaTemplate.send(topic, text);
         }
-        restTemplate.postForObject(
-            retrievalBaseUrl + "/sections", Map.of("content", trimmed), String.class);
       }
     } catch (Exception e) {
       throw new RuntimeException("Failed to ingest filing", e);
