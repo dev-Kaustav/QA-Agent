@@ -42,6 +42,7 @@ public class SectionListener {
             map.add("sectionId", section.getId().toString());
             map.add("content", section.getContent());
             restTemplate.postForObject(embeddingBaseUrl + "/embeddings", map, Void.class);
+            restTemplate.postForObject(retrievalBaseUrl + "/sections", section, Void.class);
         }
     }
 }
