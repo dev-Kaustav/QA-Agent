@@ -59,5 +59,6 @@ class SectionListenerTest {
         List<Section> sections = sectionCaptor.getAllValues();
         assertThat(sections.get(0).getCik()).isEqualTo("0001");
         assertThat(sections.get(0).getType()).isEqualTo("10-K");
+        assertThat(sections.get(0).getFilingDate()).isEqualTo("2023-01-01");
     }
 }
