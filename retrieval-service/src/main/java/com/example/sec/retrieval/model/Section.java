@@ -12,6 +12,7 @@ public class Section {
   private String cik;
   private String type;
   private String content;
+  private String filingDate;
 
   public Long getId() { return id; }
   public void setId(Long id) { this.id = id; }
@@ -21,4 +22,6 @@ public class Section {
   public void setType(String type) { this.type = type; }
   public String getContent() { return content; }
   public void setContent(String content) { this.content = content; }
+  public String getFilingDate() { return filingDate; }
+  public void setFilingDate(String filingDate) { this.filingDate = filingDate; }
 }

@@ -42,6 +42,7 @@ public class SectionListener {
             }
             String cik = (String) parsed.get("cik");
             String formType = (String) parsed.get("formType");
+            String filingDate = (String) parsed.get("filingDate");
             String[] chunks = text.split("(?<=\\.)\\s+");
             for (String chunk : chunks) {
                 String trimmed = chunk.trim();
@@ -52,6 +53,7 @@ public class SectionListener {
                 section.setContent(trimmed);
                 section.setCik(cik);
                 section.setType(formType);
+                section.setFilingDate(filingDate);
                 section = chunkerService.save(section);
                 MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
                 map.add("sectionId", section.getId().toString());
