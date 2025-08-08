@@ -9,5 +9,5 @@ import java.util.List;
  * @param sources    the documents used as evidence
  * @param confidence confidence score between 0 and 1
  */
-public record Answer(String answer, List<String> sources, double confidence) {
+public record Answer(String answer, List<Section> sources, double confidence) {
 }
