@@ -42,6 +42,7 @@ class RetrievalControllerTest {
         repository.save(s1);
         Section s2 = new Section();
         s2.setContent("Operating expenses decreased.");
+        s2.setFilingDate("2023-01-02");
         repository.save(s2);
     }
 
@@ -73,6 +74,7 @@ class RetrievalControllerTest {
         section.setType("10-K");
         section.setFilingDate("2023-01-01");
         section.setContent("Test content");
+        section.setFilingDate("2023-01-03");
 
         mockMvc.perform(
                 post("/sections")
@@ -88,5 +90,6 @@ class RetrievalControllerTest {
         assertThat(saved.get().getCik()).isEqualTo("1234");
         assertThat(saved.get().getType()).isEqualTo("10-K");
         assertThat(saved.get().getFilingDate()).isEqualTo("2023-01-01");
+        assertThat(saved.get().getFilingDate()).isEqualTo("2023-01-03");
     }
 }
