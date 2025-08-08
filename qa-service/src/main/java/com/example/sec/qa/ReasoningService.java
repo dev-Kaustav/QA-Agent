@@ -31,7 +31,7 @@ public class ReasoningService {
      * @param documents  retrieved documents
      * @return answer with confidence score
      */
-    public Answer generateAnswer(String question, List<String> documents) {
+    public Answer generateAnswer(String question, List<Section> documents) {
         if (question == null) {
             question = "";
         }
@@ -46,11 +46,11 @@ public class ReasoningService {
         }
         double bestScore = 0.0;
         String bestSentence = null;
-        for (String doc : documents) {
-            if (doc == null) {
+        for (Section doc : documents) {
+            if (doc == null || doc.content() == null) {
                 continue;
             }
-            String[] sentences = doc.split("(?<=[.?!])\\s+");
+            String[] sentences = doc.content().split("(?<=[.?!])\\s+");
             for (String sentence : sentences) {
                 double score = similarity(question, sentence);
                 if (score > bestScore) {
@@ -72,10 +72,10 @@ public class ReasoningService {
     /**
      * Batch version of {@link #generateAnswer} for reduced overhead.
      */
-    public List<Answer> generateAnswers(List<String> questions, List<List<String>> documentsList) {
+    public List<Answer> generateAnswers(List<String> questions, List<List<Section>> documentsList) {
         List<Answer> results = new ArrayList<>();
         for (int i = 0; i < questions.size(); i++) {
-            List<String> docs = documentsList != null && i < documentsList.size()
+            List<Section> docs = documentsList != null && i < documentsList.size()
                 ? documentsList.get(i)
                 : Collections.emptyList();
             results.add(generateAnswer(questions.get(i), docs));

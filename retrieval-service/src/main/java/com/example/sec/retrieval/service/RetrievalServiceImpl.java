@@ -11,6 +11,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -30,10 +31,19 @@ public class RetrievalServiceImpl implements RetrievalService {
   }
 
   @Override
-  public List<Section> search(String query) {
+  public List<Section> search(String query, String cik, String formType, String filingDate) {
     SearchRequest request = new SearchRequest("sections");
-    SearchSourceBuilder sourceBuilder =
-        new SearchSourceBuilder().query(QueryBuilders.queryStringQuery(query));
+    BoolQueryBuilder boolQuery = QueryBuilders.boolQuery().must(QueryBuilders.queryStringQuery(query));
+    if (cik != null) {
+      boolQuery.filter(QueryBuilders.termQuery("cik", cik));
+    }
+    if (formType != null) {
+      boolQuery.filter(QueryBuilders.termQuery("type", formType));
+    }
+    if (filingDate != null) {
+      boolQuery.filter(QueryBuilders.termQuery("filingDate", filingDate));
+    }
+    SearchSourceBuilder sourceBuilder = new SearchSourceBuilder().query(boolQuery);
     request.source(sourceBuilder);
     try {
       SearchResponse response = esClient.search(request, RequestOptions.DEFAULT);
@@ -51,7 +61,7 @@ public class RetrievalServiceImpl implements RetrievalService {
           .collect(Collectors.toList());
     } catch (Exception e) {
       // Fallback to the relational database search when Elasticsearch is unavailable
-      return repository.findByContentContainingIgnoreCase(query);
+      return repository.search(query, cik, formType, filingDate);
     }
   }
 }
