@@ -26,4 +26,15 @@ class ReasoningServiceTest {
         assertEquals("No relevant answer found.", answer.answer());
         assertEquals(0.0, answer.confidence());
     }
+
+    @Test
+    void aggregatesAndComparesAcrossGroups() {
+        var docsByGroup = new java.util.LinkedHashMap<String, List<String>>();
+        docsByGroup.put("AAPL 2020", List.of("Revenue was $5 million."));
+        docsByGroup.put("AAPL 2021", List.of("Revenue was $6 million."));
+        Answer answer = reasoningService.generateComparativeAnswer("What was the revenue?", docsByGroup);
+        assertTrue(answer.answer().contains("AAPL 2020: Revenue was $5 million."));
+        assertTrue(answer.answer().contains("AAPL 2021: Revenue was $6 million."));
+        assertTrue(answer.answer().contains("highest") || answer.answer().contains("All values"));
+    }
 }
