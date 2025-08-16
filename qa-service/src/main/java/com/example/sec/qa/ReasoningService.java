@@ -34,7 +34,7 @@ public class ReasoningService {
      * @param documents  retrieved documents
      * @return answer with confidence score
      */
-    public Answer generateAnswer(String question, List<String> documents) {
+    public Answer generateAnswer(String question, List<Section> documents) {
         if (question == null) {
             question = "";
         }
@@ -93,10 +93,10 @@ public class ReasoningService {
     /**
      * Batch version of {@link #generateAnswer} for reduced overhead.
      */
-    public List<Answer> generateAnswers(List<String> questions, List<List<String>> documentsList) {
+    public List<Answer> generateAnswers(List<String> questions, List<List<Section>> documentsList) {
         List<Answer> results = new ArrayList<>();
         for (int i = 0; i < questions.size(); i++) {
-            List<String> docs = documentsList != null && i < documentsList.size()
+            List<Section> docs = documentsList != null && i < documentsList.size()
                 ? documentsList.get(i)
                 : Collections.emptyList();
             results.add(generateAnswer(questions.get(i), docs));
